@@ -1,23 +1,25 @@
 $(document).ready(function() { 
 
-  var b = createEasyBoard();
+  var b = createBoard(9, 9, 10);
   addBoard(b);
 
-  function createEasyBoard() {
+  function createBoard(r, c, numMines) {
+    var minePositions = [];
     // the easy board is 9x9 and has 10 mines
     var board = [];
-    for(var i = 0; i < 9; i++) { 
+    for(var i = 0; i < r; i++) { 
       board[i] = [];
-      for (var j = 0; j < 9; j++) board[i][j] = 0;
+      for (var j = 0; j < c; j++) board[i][j] = 0;
     } 
     // not pretty
-    // select 10 random positions to put a mine and place it there (spot has true)
+    // select 10 random positions to put a mine and place it there (spot has X)
     var minesPlaced = 0;
-    while (minesPlaced < 10){ 
-      var x = Math.floor(Math.random()*9); 
-      var y = Math.floor(Math.random()*9);
-      if (board[x][y] != true) { 
-        board[x][y] = true;
+    while (minesPlaced < numMines){ 
+      var x = Math.floor(Math.random()*c); 
+      var y = Math.floor(Math.random()*r);
+      if (board[x][y] != 'X') { 
+        board[x][y] = 'X';
+        minePositions.push([x,y]);
         if (x > 0) {
           board[x-1][y]++;
           if (y > 0) { 
@@ -35,6 +37,12 @@ $(document).ready(function() {
         minesPlaced++;
       }
     }
+
+    console.log(minePositions);
+
+    for (var i = 0; i < minePositions.length; i++) { 
+      board[minePositions[i][0]][minePositions[i][1]] = 'X';
+    }
     console.log(board);
     return board;
   }
@@ -43,9 +51,9 @@ $(document).ready(function() {
   function addBoard(boardData) {
     var mainDiv = $('#board');
     var result = "<table border=1>";
-    for (var i = 0; i < 9; i++) { 
+    for (var i = 0; i < boardData.length; i++) { 
       result += "<tr>";
-      for (var j = 0; j < 9; j++) { 
+      for (var j = 0; j < boardData[i].length; j++) { 
          result += "<td>"+boardData[i][j] + "</td>";
       }
       result = result + "</tr>";
