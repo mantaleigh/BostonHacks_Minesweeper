@@ -10,7 +10,6 @@ $(document).ready(function() {
       board[i] = [];
       for (var j = 0; j < 9; j++) board[i][j] = 0;
     } 
-
     // not pretty
     // select 10 random positions to put a mine and place it there (spot has true)
     var minesPlaced = 0;
@@ -40,16 +39,18 @@ $(document).ready(function() {
     return board;
   }
 
-/// working on this
+// working on this
   function addBoard(boardData) {
     var mainDiv = $('#board');
+    var result = "<table border=1>";
     for (var i = 0; i < 9; i++) { 
-      var s = "";
+      result += "<tr>";
       for (var j = 0; j < 9; j++) { 
-         s = s + boardData[i][j] + " ";
+         result += "<td>"+boardData[i][j] + "</td>";
       }
-      mainDiv.append('<p>' + s + '</p>');
+      result = result + "</tr>";
     }
+    mainDiv.append(result);
   }
 
 })
