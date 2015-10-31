@@ -1,15 +1,15 @@
 $(document).ready(function() { 
 
-  var b = createBoard(9, 9, 10);
+  var b = createBoard(15, 15, 10);
   addBoard(b);
 
   function createBoard(r, c, numMines) {
     var minePositions = [];
     // the easy board is 9x9 and has 10 mines
     var board = [];
-    for(var i = 0; i < r; i++) { 
+    for(var i = 0; i < c; i++) { 
       board[i] = [];
-      for (var j = 0; j < c; j++) board[i][j] = 0;
+      for (var j = 0; j < r; j++) board[i][j] = 0;
     } 
     // not pretty
     // select 10 random positions to put a mine and place it there (spot has X)
