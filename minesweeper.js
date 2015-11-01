@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var b = createBoard(9, 9, 10);
+    var b = createBoard(10, 10, 11);
     addBoard(b);
 
     function createBoard(r, c, numMines) {
@@ -60,7 +60,7 @@ $(document).ready(function () {
             for (var j = 0; j < boardData[i].length; j++) {
                 var cell = row.insertCell(j);
                 var img = document.createElement('img');
-                img.src = boardData[i][j].imgsrc;
+                if (boardData[i][j].imgsrc) img.src = boardData[i][j].imgsrc;
                 cell.appendChild(img);
                 cell.className = "cell";
             }
@@ -71,7 +71,7 @@ $(document).ready(function () {
     function Cell(x, y) {
         this.x = x;
         this.y = y;
-        this.imgsrc = 'img/unclicked.png';
+        this.imgsrc;
         this.content = 0;
         this.isMine = false;
         this.clicked = false;

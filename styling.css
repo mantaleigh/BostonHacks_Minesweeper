@@ -1,7 +1,7 @@
-<<<<<<< HEAD
-.cell {
-    color: orange;
+body { 
+	background-color: lightgray;
 }
+
 
 .circle {
     z-index: 10;
@@ -12,23 +12,27 @@
     position: fixed;
     border-style: solid;
 }
-=======
-/* Table and children classes */
 .cell { 
-    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #4D4D4D;
+    width: 35px;
 }
-.row {
-    border: 1px dashed red;
-}
-.table {
-    border: 1px solid black;
-    margin: 0px auto;
 
+.row { 
+	height: 35px;
+}
+
+.table {
+    margin: 0px auto;
+    border-collapse: separate;
 }
 
 h1 { 
 	text-align: center;
 }
 
-/* Tile classes */
->>>>>>> cc4b9ac9f165ea07eab9834a5f95354d1cdbe1d6
+.well { 
+	margin: 0px 20%;
+
+}
+
