@@ -77,7 +77,7 @@
     var controller = Leap.loop(options, function (frame) {
         var currentFrame = frame;
         var previousFrame = controller.frame(1);
-        var tenFramesBack = controller.frame(10);
+        var tenFramesBack = controller.frame(20);
         var canvas = document.getElementById("gamecanvas");
         var ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.height, canvas.width);
@@ -101,17 +101,17 @@
                 finger = hand.fingers[j];
                 if (finger.type == 1) {
                     ctx.beginPath();
-                    ctx.arc(finger.dipPosition[0] + 200, finger.dipPosition[1] + 250, 10, 0, 2 * Math.PI);
+                    ctx.arc(finger.dipPosition[0] + 200, -finger.dipPosition[1] + 250, 10, 0, 2 * Math.PI);
                     ctx.stroke();
                     for (var u = 0; u < mineArray.length; u++) {
                         mineArray[u].size = 30;
                     }
                     var selected = check_finger(finger.dipPosition);
-                    if (hand.pinchStrength > 0) {
+                    if (hand.pinchStrength > 0.7) {
                         selected.size = 60
                         for (var f = 0; f < tenFramesBack.fingers.length; f++) {
                             if (tenFramesBack.fingers[f].type == 1) {
-                                if (tenFramesBack.fingers[f].dipPosition[2] - finger.dipPosition[2] < 20) {
+                                if (tenFramesBack.fingers[f].dipPosition[2] - finger.dipPosition[2] < -50) {
                                     selected.size = 160;
                                 }
                             }
@@ -128,8 +128,8 @@
 
     function check_finger(pos) {
         for (var i = 0; i < mineArray.length; i++) {
-            if (((mineArray[i].xpos - 5) < pos[0] + 150 < (mineArray[i].xpos + 5)) && ((mineArray[i].ypos - 5) < pos[1] + 250 < (mineArray[i].ypos + 5))) {
-                console.log(mineArray[i]);
+            if (((mineArray[i].xpos - 5) < pos[0] + 200 < (mineArray[i].xpos + 5)) && ((mineArray[i].ypos - 5) < pos[1] + 250 < (mineArray[i].ypos + 5))) {
+                console.log(mineArray[i].xpos - 5, pos[0], pos[1]);
                 return mineArray[i];
             }
         }
