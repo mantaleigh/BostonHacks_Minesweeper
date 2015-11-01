@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var NUM_ROWS = 8; 
     var NUM_COLS = 8; 
-    var NUM_MINES = 10;
+    var NUM_MINES = 11;
 
     var b = createBoard(NUM_ROWS, NUM_COLS, NUM_MINES);
     addBoard(b);
@@ -117,7 +117,12 @@ $(document).ready(function () {
                               handIds.forEach(function(handId){ 
                                 if(leftHand != null && leftHand.valid && gesture.type == "circle") {
 
-                                  if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
+                                  if (b[r][c].isMine) { 
+                                    //alert('found a mine at ' + r + ", " + c);
+                                    tdObj.style.backgroundImage = "url('img/mine.jpg')";
+                                    //tdObj.innerHTML = "!!!";
+                                    console.log('found a mine');
+                                  }
                                   else {  
                                     if (b[r][c].content != 0) tdObj.innerHTML = b[r][c].content;
                                     else uncoverBlanks(r, c);
@@ -132,9 +137,7 @@ $(document).ready(function () {
                                     tdObj.style.backgroundColor = 'gray';
                                   }
                               };
-
                             });
-
                           });
                         } 
                   }
@@ -143,6 +146,9 @@ $(document).ready(function () {
       });
 
       function uncoverBlanks(x, y) { 
+     
+       // tdObj.style.backgroundColor = 'gray';
+
       }
 
       function check_finger(x, y) {
