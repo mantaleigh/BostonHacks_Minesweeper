@@ -94,10 +94,11 @@ $(document).ready(function () {
                   var hand = frame.hands[j];
                   if(hand.type == "right") rightHand = hand;
                   if(hand.type == "left") leftHand = hand;
-                //  console.log(hand.type);
+                 // console.log(hand.type);
               }
               
                   if(rightHand != null && rightHand.valid){
+
                       var indexFinger = null;
                       for(var i=0; i<rightHand.fingers.length; i++){
                           finger = rightHand.fingers[i];
@@ -119,8 +120,6 @@ $(document).ready(function () {
                               var handIds = gesture.handIds;
                               handIds.forEach(function(handId){ 
                                 if(leftHand != null && leftHand.valid && gesture.type == "circle") {
-                                    //alert("YEY!");
-                                    console.log("YEY!");
 
                                   if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
                                   else {  
@@ -133,6 +132,7 @@ $(document).ready(function () {
                                     if (b[r][c].content == 5) color = 'maroon'; 
                                     if (b[r][c].content == 6) color = 'orange';
                                     tdObj.style.color = color;
+                                    tdObj.style.backgroundColor = 'gray';
                                   }
                               };
 
