@@ -1,6 +1,10 @@
 $(document).ready(function () {
 
-    var b = createBoard(9, 9, 10);
+    var NUM_ROWS = 10; 
+    var NUM_COLS = 10; 
+    var NUM_MINES = 11;
+
+    var b = createBoard(NUM_ROWS, NUM_COLS, NUM_MINES);
     addBoard(b);
 
     function createBoard(r, c, numMines) {
@@ -46,137 +50,120 @@ $(document).ready(function () {
         }
         console.log(board);
         return board;
-    }
+    } // close createBoard
 
     // Method that dynamically creates a board depending on size.
     function addBoard(boardData) {
         // Fetch table reference  
-        var table = document.getElementById("board");
-        table.className = "table";
+        var table = $("#board");
         // Add rows and cells
         for (var i = 0; i < boardData.length; i++) {
-            var row = table.insertRow(i);
-            row.className = "row";
+            var row = $('<tr>');
+            table.append(row);
             for (var j = 0; j < boardData[i].length; j++) {
-                var cell = row.insertCell(j);
-                var img = document.createElement('img');
-                img.src = boardData[i][j].imgsrc;
-                cell.appendChild(img);
-                cell.className = "cell";
+                var cell = $("<td>");
+                if (!boardData[i][j].isMine) cell.innerHTML = boardData[i][j].content;
+                else cell.innerHTML = "X";
+                row.append(cell);
+                // var img = document.createElement('img');
+                // if (boardData[i][j].imgsrc) img.src = boardData[i][j].imgsrc;
+               // cell.append(img);
+                // cell.addClass("cell");
             }
         }
-    }
+    } // close addBoard
 
     // cell object
     function Cell(x, y) {
         this.x = x;
         this.y = y;
-        this.imgsrc = 'img/unclicked.png';
+        this.imgsrc;
         this.content = 0;
         this.isMine = false;
         this.clicked = false;
-    }
+    } // close cell
 
-});
 
-//--------------------
-/*
+    var options = {
+          enableGestures: true
+      };
 
-function concatData(id, data) {
-    return id + ": " + data + "<br>";
-}
 
-function concatJointPosition(id, position) {
-    return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
-}
+      var output = $("#output");
 
-var frameString = "",
-    handString = "",
-    fingerString = "";
-var hand, finger;
+        function concatData(id, data) {
+            return id + ": " + data + "<br>";
+        }
 
-var options = {
-    enableGestures: true
-};
+        function concatJointPosition(id, position) {
+            return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
+        }
 
-var controller = Leap.loop(options, function (frame) {
-    var currentFrame = frame;
-    var previousFrame = controller.frame(1);
-    var tenFramesBack = controller.frame(20);
+        var frameString = "",
+            handString = "",
+            fingerString = "";
+        var hand, finger;
 
-    frameString = "";
-    frameString += concatData("num_hands", frame.hands.length);
-    frameString += concatData("num_fingers", frame.fingers.length);
-    frameString += "<br>";
+        var options = {
+            enableGestures: true
+        };
 
-    for (var i = 0, len = frame.hands.length; i < len; i++) {
-        hand = frame.hands[i];
-        handString = concatData("hand_type", hand.type);
-        handString += concatData("confidence", hand.confidence);
-        handString += concatData("pinch_strength", hand.pinchStrength);
-        handString += concatData("grab_strength", hand.grabStrength);
+      var controller = Leap.loop(options, function (frame) {
+          var currentFrame = frame;
+          var previousFrame = controller.frame(1);
+          var tenFramesBack = controller.frame(20);
 
-        handString += '<br>';
-        for (var j = 0, len2 = hand.fingers.length; j < len2; j++) {
-            finger = hand.fingers[j];
-            if (finger.type == 1) {
-                fingerString = finger.dipPosition + "<br>";
-                var circle = document.getElementById("circle");
-                circle.style.left = finger.dipPosition[0] * 1.5;
-                circle.style.bottom = finger.dipPosition[1] * 1.8;
-                //selected returns the column and the row
-                var selected = check_finger(finger.dipPosition);
-                if (finger.dipPosition[2] <= 0) {
-                    if (board[selected[0]][selected[1]].isMine == true) {
-                        alert("BOO");
-                    } else {
-                        document.getElementById(board[selected[0]] + "-" + [selected[1]]).imgsrc = "img/" + board[selected[0]][selected[1]].content + ".png";
-                    }
+          frameString = "";
+          frameString += concatData("num_hands", frame.hands.length);
+          frameString += concatData("num_fingers", frame.fingers.length);
+          frameString += "<br>";
 
-                } else if (finger.dipPosition[2] > 0 && (board[selected[0]][selected[1]].clicked == false)) {
-                    document.getElementById(board[selected[0]] + "-" + [selected[1]]).imgsrc = "img/hover.png";
-                }
+          for (var i = 0, len = frame.hands.length; i < len; i++) {
+              hand = frame.hands[i];
+              handString = concatData("hand_type", hand.type);
+              handString += concatData("confidence", hand.confidence);
+              handString += concatData("pinch_strength", hand.pinchStrength);
+              handString += concatData("grab_strength", hand.grabStrength);
 
-                if (hand.pinchStrength > 0.7) {
-                    if (board[selected[0]][selected[1]].isMine == true) {
-                        document.getElementById(selected[0] + "-" + selected[1]).imgsrc = "img/mine.png";
-                    } else {
-                        document.getElementById(selected[0] + "-" + selected[1]).imgsrc = "img/" + board[selected[0]][selected[1]].content + ".png";
-
-                    }
-                    for (var f = 0; f < tenFramesBack.fingers.length; f++) {
-                        if (tenFramesBack.fingers[f].type == 1) {
-                            if (tenFramesBack.fingers[f].dipPosition[2] - finger.dipPosition[2] < -50) {
-                                break;
-                                //    mineArray[selected].size = 160;
-                                //Delete -- bugged
-                                //if (finger.dipPosition[2] > 150) {
-                                //  mineArray[selected] = mineArray[mineArray.length - 1];
-                                //mineArray.length -= 1;
-                                //}
-
-                            }
-                            //   mineArray[selected.size] = 60
-
+              handString += '<br>';
+              for (var j = 0, len2 = hand.fingers.length; j < len2; j++) {
+                  finger = hand.fingers[j];
+                  if (finger.type == 1) {
+                      fingerString = finger.dipPosition + "<br>";
+                      var circle = $("#circle");
+                      circle.css('left',finger.dipPosition[0] * 1.5);
+                      circle.css('bottom', finger.dipPosition[1] * 1.8);
+                      var tdArray = check_finger(parseInt(circle.css('left'), 10)+5, parseInt(circle.css('bottom'), 10)-5);
+                      
+                      if (tdArray) { 
+                        var tdObj = tdArray[0];
+                        //console.log(tdObj); // testing
+                       // tdObj.style.backgroundColor = 'orange';
+                        //console.log(hand.pinchStrength);
+                        if (hand.pinchStrength > .8) { 
+                          tdObj.style.backgroundColor = 'red';
                         }
-                    }
-                }
-            }
+                      }
+                      
+                  }
+              }
+          }
+          frameString += handString;
+          frameString += fingerString;
+          output.innerHTML = frameString;
+      });
+
+
+      function check_finger(x, y) {
+        // 50 is hardcoded into the css
+        var cIndex = Math.floor(x/50);
+        var rIndex = Math.floor(-1*((y/50)-12.5)); // weirdly hardcoded???? idk
+        //console.log(cIndex, rIndex);
+
+        if (rIndex < NUM_ROWS && rIndex >= 0 && cIndex < NUM_COLS && cIndex >= 0) {
+          return [$('table')[0].rows[rIndex].cells[cIndex], rIndex, cIndex];
         }
-    }
-    frameString += handString;
-    frameString += fingerString;
+        return null; // a td object is not being hovered over
+      }
 
-
-    output.innerHTML = frameString;
 });
-
-function check_finger(pos) {
-    for (var i = 0; i < board[i].length; i++) {
-        if (((mineArray[i].xpos - 5) < pos[0] + 200 < (mineArray[i].xpos + 5)) && ((mineArray[i].ypos - 5) < pos[1] + 250 < (mineArray[i].ypos + 5))) {
-            console.log(mineArray[i].xpos - 5, pos[0], pos[1]);
-            return i;
-        }
-    }
-}
-*/
