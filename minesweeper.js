@@ -3,6 +3,7 @@ $(document).ready(function () {
     var NUM_ROWS = 8;
     var NUM_COLS = 8;
     var NUM_MINES = 11;
+    var NUM_SWIPES = 11;
 
     var b = createBoard(NUM_ROWS, NUM_COLS, NUM_MINES);
     addBoard(b);
@@ -50,6 +51,7 @@ $(document).ready(function () {
         // Make sure mines are placed correctly
         for (var i = 0; i < minePositions.length; i++) {
             board[minePositions[i][0]][minePositions[i][1]].isMine = true;
+            board[minePositions[i][0]][minePositions[i][1]].content = 'X';
         }
         // console.log(board);
         return board;
@@ -90,6 +92,16 @@ $(document).ready(function () {
 
     var controller = Leap.loop(options, function (frame) {
         //console.log(frame.hands.length);
+        if (NUM_SWIPES == 0) {
+            alert('No More Disarms :(');
+            console.log("No More Disarms :(");
+            var scoreboard = document.getElementById("scores");
+            $('#timer').timer('pause');
+            var time = $('#timer').data('seconds');
+            scoreboard.innerHTML = "Time taken: " + time;
+            scoreboard.style.visibility = 'visible';
+            end();
+        }
         var rightHand = null;
         var leftHand = null;
 
@@ -123,7 +135,7 @@ $(document).ready(function () {
                         frame.gestures.forEach(function (gesture) {
                             var handIds = gesture.handIds;
                             handIds.forEach(function (handId) {
-                                if (leftHand != null && leftHand.valid && gesture.type == "circle") {
+                                if (gesture.type == "circle") {
 
                                     if (b[r][c].isMine) {
                                         alert('found a mine at ' + r + ", " + c);
@@ -135,7 +147,8 @@ $(document).ready(function () {
                                         //alert('found a mine at ' + r + ", " + c);
                                         tdObj.style.backgroundImage = "url('img/mine.jpg')";
                                         //tdObj.innerHTML = "!!!";
-                                        console.log('found a mine');
+                                        console.log('You lost. Trump won. Boo.');
+                                        end();
                                     } else {
                                         if (b[r][c].content != 0) tdObj.innerHTML = b[r][c].content;
                                         else uncoverBlanks(r, c);
@@ -149,7 +162,29 @@ $(document).ready(function () {
                                         tdObj.style.color = color;
                                         tdObj.style.backgroundColor = 'gray';
                                     }
-                                };
+                                } else if (leftHand != null && rightHand != null && leftHand.valid && gesture.type == "screenTap" && NUM_SWIPES > 0) {
+
+                                    if (b[r][c].isMine == true) {
+                                        console.log("Congratulations! You fired Donald Trump!");
+                                        b[r][c].isMine = false;
+                                        tdObj.style.backgroundImage = "/img/mine.jpg";
+                                    } else {
+                                        if (b[r][c].content != 0) {
+                                            tdObj.innerHTML = b[r][c].content;
+                                        }
+                                        var color = 'black';
+                                        if (b[r][c].content == 1) color = 'blue';
+                                        if (b[r][c].content == 2) color = 'green';
+                                        if (b[r][c].content == 3) color = 'red';
+                                        if (b[r][c].content == 4) color = 'purple';
+                                        if (b[r][c].content == 5) color = 'maroon';
+                                        if (b[r][c].content == 6) color = 'orange';
+                                        tdObj.style.color = color;
+                                        tdObj.style.backgroundColor = 'gray';
+                                    }
+                                    NUM_SWIPES--;
+                                    console.log("Number of disarms left: " + NUM_SWIPES);
+                                }
                             });
                         });
                     }
@@ -164,16 +199,15 @@ $(document).ready(function () {
 
     }
 
+    function end() {
+        controller.disconnect();
+    }
+
     function check_finger(x, y) {
         // 50 is hardcoded into the css
-        << << << < HEAD
-        var cIndex = Math.floor(x / 50);
-        var rIndex = Math.floor(-1 * ((y / 50) - 12.5)) + 1; // weirdly hardcoded???? idk
-        console.log(cIndex, rIndex); === === =
         var cIndex = Math.floor(x / 50);
         var rIndex = Math.floor(-1 * ((y / 50) - 12.5)); // weirdly hardcoded???? idk
         // console.log(cIndex, rIndex);
-        >>> >>> > f5c986b5383326d37bab4be61899f3fb575a6ee2
 
         if (rIndex < NUM_ROWS && rIndex >= 0 && cIndex < NUM_COLS && cIndex >= 0) {
             return [$('table')[0].rows[rIndex].cells[cIndex], rIndex, cIndex];
