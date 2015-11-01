@@ -61,7 +61,6 @@ $(document).ready(function() {
              var cell = row.insertCell(j);
              var img = document.createElement('img');
              img.src = boardData[i][j].imgsrc;
-             img.id = i + '-' + j;
              cell.appendChild(img);
              cell.className = "cell";
           }
