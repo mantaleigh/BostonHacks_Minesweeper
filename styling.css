@@ -1,12 +1,13 @@
- /*Table and children classes */
+/*Table and children classes */
 .cell { 
-    border: 1px solid black;
+    border: 2px solid yellow;
+    background-color: black;
 }
 .row {
-    border: 1px dashed red;
+    border: 2px solid yellow;
 }
 .table {
-    border: 1px solid black;
+    border: 2px solid yellow;
     margin: 0px auto;
     align-content: center;
     width: initial;
@@ -16,9 +17,19 @@ h1 {
 	text-align: center;
 }
 
+.outer-container{
+    background-image: url("mario.jpg");
+    background-size: cover;
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
 
 .starter-template {
-  padding: 40px 15px;
-  text-align: center;
+    min-height: auto;
+    max-height: auto;
+    padding: 200px 15px;
+    text-align: center;
 }
 /* Tile classes */
