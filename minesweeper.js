@@ -88,6 +88,7 @@ $(document).ready(function () {
         this.content = 0;
         this.isMine = false;
         this.clicked = false;
+
     } // close cell
 
 
@@ -106,9 +107,6 @@ $(document).ready(function () {
             return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
         }
 
-        var frameString = "",
-            handString = "",
-            fingerString = "";
         var hand, finger;
 
         var options = {
@@ -120,23 +118,12 @@ $(document).ready(function () {
           var previousFrame = controller.frame(1);
           var tenFramesBack = controller.frame(20);
 
-          frameString = "";
-          frameString += concatData("num_hands", frame.hands.length);
-          frameString += concatData("num_fingers", frame.fingers.length);
-          frameString += "<br>";
-
           for (var i = 0, len = frame.hands.length; i < len; i++) {
               hand = frame.hands[i];
-              handString = concatData("hand_type", hand.type);
-              handString += concatData("confidence", hand.confidence);
-              handString += concatData("pinch_strength", hand.pinchStrength);
-              handString += concatData("grab_strength", hand.grabStrength);
 
-              handString += '<br>';
               for (var j = 0, len2 = hand.fingers.length; j < len2; j++) {
                   finger = hand.fingers[j];
                   if (finger.type == 1) {
-                      fingerString = finger.dipPosition + "<br>";
                       var circle = $("#circle");
                       circle.css('left',finger.dipPosition[0] * 1.5);
                       circle.css('bottom', finger.dipPosition[1] * 1.8);
@@ -153,8 +140,18 @@ $(document).ready(function () {
                           
                           if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
                           else {  
-                            console.log(tdObj);
+                           // console.log(tdObj);
                             tdObj.innerHTML = b[r][c].content;
+                            var color = 'black';
+                            if (b[r][c].content == 1) color = 'blue';
+                            if (b[r][c].content == 2) color = 'green'; 
+                            if (b[r][c].content == 3) color = 'red'; 
+                            if (b[r][c].content == 4) color = 'purple'; 
+                            if (b[r][c].content == 5) color = 'maroon'; 
+                            if (b[r][c].content == 6) color = 'orange';
+                            tdObj.style.color = color;
+
+                            console.log(color);
                           }
                         } 
                       }
@@ -162,9 +159,6 @@ $(document).ready(function () {
                   }
               }
           }
-          frameString += handString;
-          frameString += fingerString;
-          output.innerHTML = frameString;
       });
 
 
