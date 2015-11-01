@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var NUM_ROWS = 8;
     var NUM_COLS = 8;
-    var NUM_MINES = 10;
+    var NUM_MINES = 11;
 
     var b = createBoard(NUM_ROWS, NUM_COLS, NUM_MINES);
     addBoard(b);
@@ -46,12 +46,12 @@ $(document).ready(function () {
             }
         }
 
-        console.log(minePositions);
+        // console.log(minePositions);
         // Make sure mines are placed correctly
         for (var i = 0; i < minePositions.length; i++) {
             board[minePositions[i][0]][minePositions[i][1]].isMine = true;
         }
-        console.log(board);
+        // console.log(board);
         return board;
     } // close createBoard
 
@@ -83,10 +83,10 @@ $(document).ready(function () {
 
     var output = $("#output");
 
+
     var options = {
         enableGestures: true
     };
-
 
     var controller = Leap.loop(options, function (frame) {
         //console.log(frame.hands.length);
@@ -132,8 +132,13 @@ $(document).ready(function () {
                                         var time = $('#timer').data('seconds');
                                         scoreboard.innerHTML = "Time taken: " + time;
                                         scoreboard.style.visibility = 'visible';
+                                        //alert('found a mine at ' + r + ", " + c);
+                                        tdObj.style.backgroundImage = "url('img/mine.jpg')";
+                                        //tdObj.innerHTML = "!!!";
+                                        console.log('found a mine');
                                     } else {
-                                        tdObj.innerHTML = b[r][c].content;
+                                        if (b[r][c].content != 0) tdObj.innerHTML = b[r][c].content;
+                                        else uncoverBlanks(r, c);
                                         var color = 'black';
                                         if (b[r][c].content == 1) color = 'blue';
                                         if (b[r][c].content == 2) color = 'green';
@@ -145,24 +150,30 @@ $(document).ready(function () {
                                         tdObj.style.backgroundColor = 'gray';
                                     }
                                 };
-
                             });
-
                         });
                     }
-
-
                 }
             }
         }
     });
 
+    function uncoverBlanks(x, y) {
+
+        // tdObj.style.backgroundColor = 'gray';
+
+    }
 
     function check_finger(x, y) {
         // 50 is hardcoded into the css
+        << << << < HEAD
         var cIndex = Math.floor(x / 50);
         var rIndex = Math.floor(-1 * ((y / 50) - 12.5)) + 1; // weirdly hardcoded???? idk
-        console.log(cIndex, rIndex);
+        console.log(cIndex, rIndex); === === =
+        var cIndex = Math.floor(x / 50);
+        var rIndex = Math.floor(-1 * ((y / 50) - 12.5)); // weirdly hardcoded???? idk
+        // console.log(cIndex, rIndex);
+        >>> >>> > f5c986b5383326d37bab4be61899f3fb575a6ee2
 
         if (rIndex < NUM_ROWS && rIndex >= 0 && cIndex < NUM_COLS && cIndex >= 0) {
             return [$('table')[0].rows[rIndex].cells[cIndex], rIndex, cIndex];
