@@ -101,7 +101,7 @@
                 finger = hand.fingers[j];
                 if (finger.type == 1) {
                     ctx.beginPath();
-                    ctx.arc(finger.dipPosition[0] + 200, finger.dipPosition[1] + 250, 10, 0, 2 * Math.PI);
+                    ctx.arc(finger.dipPosition[0] + 200, -finger.dipPosition[1] + 250, 10, 0, 2 * Math.PI);
                     ctx.stroke();
                     for (var u = 0; u < mineArray.length; u++) {
                         mineArray[u].size = 30;
