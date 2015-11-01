@@ -85,17 +85,30 @@ $(document).ready(function () {
       };
 
       var controller = Leap.loop(options, function (frame) {
-
-          for (var i = 0, len = frame.hands.length; i < len; i++) {
-              hand = frame.hands[i];
-
-              for (var j = 0, len2 = hand.fingers.length; j < len2; j++) {
-                  finger = hand.fingers[j];
-                  if (finger.type == 1) {
+          //console.log(frame.hands.length);
+          var rightHand = null;
+          var leftHand = null;
+          
+          if(frame.hands.length > 0){
+              for(var j=0; j<frame.hands.length; j++){
+                  var hand = frame.hands[j];
+                  if(hand.type == "right") rightHand = hand;
+                  if(hand.type == "left") leftHand = hand;
+                //  console.log(hand.type);
+              }
+              
+                  if(rightHand != null && rightHand.valid){
+                      var indexFinger = null;
+                      for(var i=0; i<rightHand.fingers.length; i++){
+                          finger = rightHand.fingers[i];
+                          if(finger.type == 1) indexFinger = finger;
+                          //console.log(finger);
+                      }
                       var circle = $("#circle");
-                      circle.css('left',finger.dipPosition[0] * 1.5);
-                      circle.css('bottom', finger.dipPosition[1] * 1.8);
+                      circle.css('left',indexFinger.dipPosition[0] * 1.5);
+                      circle.css('bottom', indexFinger.dipPosition[1] * 1.8);
                       var tdArray = check_finger(parseInt(circle.css('left'), 10)+5, parseInt(circle.css('bottom'), 10)-5);
+                      
                       
                       if (tdArray) { 
                         var tdObj = tdArray[0];
@@ -105,7 +118,9 @@ $(document).ready(function () {
                             frame.gestures.forEach(function(gesture){ 
                               var handIds = gesture.handIds;
                               handIds.forEach(function(handId){ 
-                                if(frame.hand(handId).type == 'right' && gesture.type == "screenTap") {
+                                if(leftHand != null && leftHand.valid && gesture.type == "circle") {
+                                    //alert("YEY!");
+                                    console.log("YEY!");
 
                                   if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
                                   else {  
@@ -125,7 +140,7 @@ $(document).ready(function () {
 
                           });
                         } 
-                      }
+                      
                       
                   }
               }
