@@ -1,18 +1,17 @@
-/* Table and children classes */
-.cell { 
+ /*Table and children classes */
+/*.cell { 
     border: 1px solid black;
 }
 .row {
     border: 1px dashed red;
-}
+}*/
 .table {
     border: 1px solid black;
     margin: 0px auto;
-
 }
 
 h1 { 
 	text-align: center;
 }
 
-/* Tile classes */
+/* Tile classes 

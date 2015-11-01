@@ -74,6 +74,7 @@ $(document).ready(function() {
       this.imgsrc = 'img/unclicked.png';
       this.content = 0; 
       this.isMine = false; 
+      this.clicked = false;
     } 
 
 });
