@@ -9,7 +9,7 @@ $(document).ready(function() {
     var board = [];
     for(var i = 0; i < c; i++) { 
       board[i] = [];
-      for (var j = 0; j < r; j++) board[i][j] = 0;
+      for (var j = 0; j < r; j++) board[i][j] = new Square(i,j,0);
     } 
     // not pretty
     // select 10 random positions to put a mine and place it there (spot has X)
@@ -18,21 +18,21 @@ $(document).ready(function() {
       var x = Math.floor(Math.random()*c); 
       var y = Math.floor(Math.random()*r);
       if (board[x][y] != 'X') { 
-        board[x][y] = 'X';
+        board[x][y].contents = 'X';
         minePositions.push([x,y]);
         if (x > 0) {
-          board[x-1][y]++;
+          board[x-1][y].contents++;
           if (y > 0) { 
-            board[x-1][y-1]++;
+            board[x-1][y-1].contents++;
           }
-          if (y < 8) board[x-1][y+1]++;
+          if (y < 8) board[x-1][y+1].contents++;
         }
-        if (y < 8) board[x][y+1]++;
-        if (y > 0) board[x][y-1]++;
+        if (y < 8) board[x][y+1].contents++;
+        if (y > 0) board[x][y-1].contents++;
         if (x < 8) { 
-          board[x+1][y]++;
-          if (y < 8) board[x+1][y+1]++;
-          if (y > 0) board[x+1][y-1]++;
+          board[x+1][y].contents++;
+          if (y < 8) board[x+1][y+1].contents++;
+          if (y > 0) board[x+1][y-1].contents++;
         }
         minesPlaced++;
       }
@@ -41,7 +41,7 @@ $(document).ready(function() {
     console.log(minePositions);
 
     for (var i = 0; i < minePositions.length; i++) { 
-      board[minePositions[i][0]][minePositions[i][1]] = 'X';
+      board[minePositions[i][0]][minePositions[i][1]].contents = 'X';
     }
     console.log(board);
     return board;
@@ -60,5 +60,11 @@ $(document).ready(function() {
     }
     mainDiv.append(result);
   }
+    
+    var Square = new function(x, y, contents){
+        this.x = x;
+        this.y = y;
+        this.contents = contents;
+    }
 
 })
