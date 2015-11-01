@@ -61,21 +61,8 @@ $(document).ready(function () {
             var row = $('<tr>');
             table.append(row);
             for (var j = 0; j < boardData[i].length; j++) {
-
-              var cell = $("<td>");
-               // var cell;
-                // if (!boardData[i][j].isMine) {
-                //   cell = $("<td> " + boardData[i][j].content + " </td>");
-                // }
-                // else {
-                //   cell = $("<td>  X </td>");
-                // }
+                var cell = $("<td>");
                 row.append(cell);
-                
-                // var img = document.createElement('img');
-                // if (boardData[i][j].imgsrc) img.src = boardData[i][j].imgsrc;
-               // cell.append(img);
-                // cell.addClass("cell");
             }
         }
     } // close addBoard
@@ -91,32 +78,13 @@ $(document).ready(function () {
 
     } // close cell
 
-
-    var options = {
+      var output = $("#output");
+    
+      var options = {
           enableGestures: true
       };
 
-
-      var output = $("#output");
-
-        function concatData(id, data) {
-            return id + ": " + data + "<br>";
-        }
-
-        function concatJointPosition(id, position) {
-            return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
-        }
-
-        var hand, finger;
-
-        var options = {
-            enableGestures: true
-        };
-
       var controller = Leap.loop(options, function (frame) {
-          var currentFrame = frame;
-          var previousFrame = controller.frame(1);
-          var tenFramesBack = controller.frame(20);
 
           for (var i = 0, len = frame.hands.length; i < len; i++) {
               hand = frame.hands[i];
@@ -133,9 +101,6 @@ $(document).ready(function () {
                         var tdObj = tdArray[0];
                         var r = tdArray[1];
                         var c = tdArray[2];
-                        //console.log(tdObj); // testing
-                       // tdObj.style.backgroundColor = 'orange';
-                        //console.log(hand.pinchStrength);
                         if (frame.valid && frame.gestures.length > 0) { 
                             frame.gestures.forEach(function(gesture){ 
                               var handIds = gesture.handIds;
@@ -144,7 +109,6 @@ $(document).ready(function () {
 
                                   if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
                                   else {  
-                                   // console.log(tdObj);
                                     tdObj.innerHTML = b[r][c].content;
                                     var color = 'black';
                                     if (b[r][c].content == 1) color = 'blue';
