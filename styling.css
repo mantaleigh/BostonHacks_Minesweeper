@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .cell {
     color: orange;
 }
@@ -11,3 +12,23 @@
     position: fixed;
     border-style: solid;
 }
+=======
+/* Table and children classes */
+.cell { 
+    border: 1px solid black;
+}
+.row {
+    border: 1px dashed red;
+}
+.table {
+    border: 1px solid black;
+    margin: 0px auto;
+
+}
+
+h1 { 
+	text-align: center;
+}
+
+/* Tile classes */
+>>>>>>> cc4b9ac9f165ea07eab9834a5f95354d1cdbe1d6
