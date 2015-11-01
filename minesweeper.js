@@ -136,23 +136,30 @@ $(document).ready(function () {
                         //console.log(tdObj); // testing
                        // tdObj.style.backgroundColor = 'orange';
                         //console.log(hand.pinchStrength);
-                        if (hand.pinchStrength > .8) { 
-                          
-                          if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
-                          else {  
-                           // console.log(tdObj);
-                            tdObj.innerHTML = b[r][c].content;
-                            var color = 'black';
-                            if (b[r][c].content == 1) color = 'blue';
-                            if (b[r][c].content == 2) color = 'green'; 
-                            if (b[r][c].content == 3) color = 'red'; 
-                            if (b[r][c].content == 4) color = 'purple'; 
-                            if (b[r][c].content == 5) color = 'maroon'; 
-                            if (b[r][c].content == 6) color = 'orange';
-                            tdObj.style.color = color;
+                        if (frame.valid && frame.gestures.length > 0) { 
+                            frame.gestures.forEach(function(gesture){ 
+                              var handIds = gesture.handIds;
+                              handIds.forEach(function(handId){ 
+                                if(frame.hand(handId).type == 'right' && gesture.type == "screenTap") {
 
-                            console.log(color);
-                          }
+                                  if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
+                                  else {  
+                                   // console.log(tdObj);
+                                    tdObj.innerHTML = b[r][c].content;
+                                    var color = 'black';
+                                    if (b[r][c].content == 1) color = 'blue';
+                                    if (b[r][c].content == 2) color = 'green'; 
+                                    if (b[r][c].content == 3) color = 'red'; 
+                                    if (b[r][c].content == 4) color = 'purple'; 
+                                    if (b[r][c].content == 5) color = 'maroon'; 
+                                    if (b[r][c].content == 6) color = 'orange';
+                                    tdObj.style.color = color;
+                                  }
+                              };
+
+                            });
+
+                          });
                         } 
                       }
                       
