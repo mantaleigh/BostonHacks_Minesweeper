@@ -64,6 +64,7 @@ $(document).ready(function () {
                 var cell = $("<td>");
                 if (!boardData[i][j].isMine) cell.innerHTML = boardData[i][j].content;
                 else cell.innerHTML = "X";
+                row.append(cell);
                 
                 // var img = document.createElement('img');
                 // if (boardData[i][j].imgsrc) img.src = boardData[i][j].imgsrc;
