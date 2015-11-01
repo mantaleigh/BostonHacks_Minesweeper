@@ -142,7 +142,7 @@ $(document).ready(function () {
                                         var scoreboard = document.getElementById("scores");
                                         $('#timer').timer('pause');
                                         var time = $('#timer').data('seconds');
-                                        scoreboard.innerHTML = "Time taken: " + time;
+                                        scoreboard.innerHTML = "<br><br><br><br><br><br><br><p style='font-weight:bold; font-size:20px'>Time taken: " + time + " seconds</p>";
                                         scoreboard.style.visibility = 'visible';
                                         //alert('found a mine at ' + r + ", " + c);
                                         tdObj.style.backgroundImage = "url('img/mine.jpg')";
