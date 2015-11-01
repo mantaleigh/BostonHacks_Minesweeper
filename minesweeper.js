@@ -62,13 +62,14 @@ $(document).ready(function () {
             table.append(row);
             for (var j = 0; j < boardData[i].length; j++) {
 
-                var cell;
-                if (!boardData[i][j].isMine) {
-                  cell = $("<td> " + boardData[i][j].content + " </td>");
-                }
-                else {
-                  cell = $("<td>  X </td>");
-                }
+              var cell = $("<td>");
+               // var cell;
+                // if (!boardData[i][j].isMine) {
+                //   cell = $("<td> " + boardData[i][j].content + " </td>");
+                // }
+                // else {
+                //   cell = $("<td>  X </td>");
+                // }
                 row.append(cell);
                 
                 // var img = document.createElement('img');
@@ -148,13 +149,14 @@ $(document).ready(function () {
                         //console.log(tdObj); // testing
                        // tdObj.style.backgroundColor = 'orange';
                         //console.log(hand.pinchStrength);
-                     //   if (hand.pinchStrength > .8) { 
+                        if (hand.pinchStrength > .8) { 
                           
-                          if (b[r][c].isMine) console.log('found a mine at ' + r + ", " + c);
+                          if (b[r][c].isMine) alert('found a mine at ' + r + ", " + c);
                           else {  
-                            tdObj.style.backgroundColor = 'red';
+                            console.log(tdObj);
+                            tdObj.innerHTML = b[r][c].content;
                           }
-                      //  } 
+                        } 
                       }
                       
                   }
