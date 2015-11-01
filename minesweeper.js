@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    var NUM_ROWS = 10; 
-    var NUM_COLS = 10; 
-    var NUM_MINES = 11;
+    var NUM_ROWS = 8; 
+    var NUM_COLS = 8; 
+    var NUM_MINES = 10;
 
     var b = createBoard(NUM_ROWS, NUM_COLS, NUM_MINES);
     addBoard(b);
@@ -61,9 +61,14 @@ $(document).ready(function () {
             var row = $('<tr>');
             table.append(row);
             for (var j = 0; j < boardData[i].length; j++) {
-                var cell = $("<td>");
-                if (!boardData[i][j].isMine) cell.innerHTML = boardData[i][j].content;
-                else cell.innerHTML = "X";
+
+                var cell;
+                if (!boardData[i][j].isMine) {
+                  cell = $("<td> " + boardData[i][j].content + " </td>");
+                }
+                else {
+                  cell = $("<td>  X </td>");
+                }
                 row.append(cell);
                 
                 // var img = document.createElement('img');
@@ -138,12 +143,18 @@ $(document).ready(function () {
                       
                       if (tdArray) { 
                         var tdObj = tdArray[0];
+                        var r = tdArray[1];
+                        var c = tdArray[2];
                         //console.log(tdObj); // testing
                        // tdObj.style.backgroundColor = 'orange';
                         //console.log(hand.pinchStrength);
-                        if (hand.pinchStrength > .8) { 
-                          tdObj.style.backgroundColor = 'red';
-                        }
+                     //   if (hand.pinchStrength > .8) { 
+                          
+                          if (b[r][c].isMine) console.log('found a mine at ' + r + ", " + c);
+                          else {  
+                            tdObj.style.backgroundColor = 'red';
+                          }
+                      //  } 
                       }
                       
                   }
