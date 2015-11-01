@@ -1,18 +1,19 @@
 $(document).ready(function() { 
 
-  var b = createBoard(15, 15, 10);
-  addBoard(b);
+    var b = createBoard(15, 15, 10);
+    addBoard(b);
 
-  function createBoard(r, c, numMines) {
+    function createBoard(r, c, numMines) {
+
+    // Create board size depending on input
     var minePositions = [];
-    // the easy board is 9x9 and has 10 mines
     var board = [];
     for(var i = 0; i < c; i++) { 
       board[i] = [];
       for (var j = 0; j < r; j++) board[i][j] = 0;
     } 
-    // not pretty
-    // select 10 random positions to put a mine and place it there (spot has X)
+
+    // Choose mine locations randomly
     var minesPlaced = 0;
     while (minesPlaced < numMines){ 
       var x = Math.floor(Math.random()*c); 
@@ -39,7 +40,7 @@ $(document).ready(function() {
     }
 
     console.log(minePositions);
-
+    // Make sure mines are placed correctly
     for (var i = 0; i < minePositions.length; i++) { 
       board[minePositions[i][0]][minePositions[i][1]] = 'X';
     }
@@ -47,18 +48,21 @@ $(document).ready(function() {
     return board;
   }
 
-// working on this
-  function addBoard(boardData) {
-    var mainDiv = $('#board');
-    var result = "<table border=1>";
-    for (var i = 0; i < boardData.length; i++) { 
-      result += "<tr>";
-      for (var j = 0; j < boardData[i].length; j++) { 
-         result += "<td>"+boardData[i][j] + "</td>";
+    // Method that dynamically creates a board depending on size.
+    function addBoard(boardData) {
+        // Fetch table reference  
+        var table = document.getElementById("board");
+        table.className = "table";
+        // Add rows and cells
+        for (var i = 0; i < boardData.length; i++) {
+          var row = table.insertRow(i);
+          row.className = "row";
+          for (var j = 0; j < boardData[i].length; j++) {
+             var cell = row.insertCell(j);
+             cell.innerHTML = boardData[i][j];
+             cell.className = "cell";
+          }
+        }
       }
-      result = result + "</tr>";
-    }
-    mainDiv.append(result);
-  }
 
 })

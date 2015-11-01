@@ -1,0 +1,12 @@
+/* Table and children classes */
+.cell { 
+    border: 1px solid black;
+}
+.row {
+    border: 1px dashed red;
+}
+.table {
+    border: 1px solid aquamarine;
+}
+
+/* Tile classes */
