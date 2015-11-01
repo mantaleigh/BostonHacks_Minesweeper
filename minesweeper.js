@@ -51,18 +51,24 @@ $(document).ready(function () {
     // Method that dynamically creates a board depending on size.
     function addBoard(boardData) {
         // Fetch table reference  
-        var table = document.getElementById("board");
-        table.className = "table";
+        var table = $("#board");
+        table.addClass("table");
+        table.append('<tbody>');
         // Add rows and cells
         for (var i = 0; i < boardData.length; i++) {
-            var row = table.insertRow(i);
-            row.className = "row";
+            var row = $('<tr>');
+            $('tbody').append(row);
+            row.addClass("row");
             for (var j = 0; j < boardData[i].length; j++) {
-                var cell = row.insertCell(j);
+                var cell = $("<td>");
+                cell.on("click", function (i, j) { 
+                  console.log("clicked button: " + i + " " + j);
+                })
+                $('tr').append(cell);
                 var img = document.createElement('img');
                 if (boardData[i][j].imgsrc) img.src = boardData[i][j].imgsrc;
-                cell.appendChild(img);
-                cell.className = "cell";
+                cell.append(img);
+                cell.addClass("cell");
             }
         }
     }
@@ -75,7 +81,25 @@ $(document).ready(function () {
         this.content = 0;
         this.isMine = false;
         this.clicked = false;
+        this.onPress = function() { 
+          if (isMine) { 
+            this.imgsrc = "img/mine.png";
+          } else { 
+            this.imgsrc = "img/" + content + ".png";
+          }
+        } 
     }
+
+    function onTableCellClick(x,y) { 
+      console.log("clicked button: " + x + " " + y);
+
+    }
+
+
+
+
+
+
 
 });
 
