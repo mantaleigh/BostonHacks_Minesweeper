@@ -1,11 +1,15 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script src="timer.jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="minesweeper.js"></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -14,12 +18,16 @@
 </head>
 
 <body>
-<!--     <h1>let the game begin...</h1> -->
-
-    <table id="board"></table> 
+    <!--     <h1>let the game begin...</h1> -->
+    <div class="tablediv">
+        <table id="board"></table>
+    </div>
     <div id="output"></div>
     <div id="circle" class="circle"></div>
-.
+    <div id="timer" class="timer"></div>
+    <div id="scores" class="scores"></div>
+
+    .
 </body>
 
 </html>
