@@ -1,6 +1,6 @@
 $(document).ready(function() { 
 
-    var b = createBoard(15, 15, 10);
+    var b = createBoard(9, 9, 10);
     addBoard(b);
 
     function createBoard(r, c, numMines) {
@@ -36,7 +36,6 @@ $(document).ready(function() {
           if (y > 0) board[x+1][y-1].content++;
         }
         minesPlaced++;
-        console.log('placed mine number: ' + minesPlaced);
       }
     }
 
@@ -62,6 +61,7 @@ $(document).ready(function() {
              var cell = row.insertCell(j);
              var img = document.createElement('img');
              img.src = boardData[i][j].imgsrc;
+             img.id = i + '-' + j;
              cell.appendChild(img);
              cell.className = "cell";
           }
