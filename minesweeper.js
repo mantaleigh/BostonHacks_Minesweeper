@@ -90,24 +90,20 @@ $(document).ready(function () {
       };
 
 
-      var output = $("#output");
+    var output = $("#output");
 
-        function concatData(id, data) {
-            return id + ": " + data + "<br>";
-        }
+    function concatData(id, data) {
+        return id + ": " + data + "<br>";
+    }
 
-        function concatJointPosition(id, position) {
-            return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
-        }
+    function concatJointPosition(id, position) {
+        return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
+    }
 
-        var frameString = "",
-            handString = "",
-            fingerString = "";
-        var hand, finger;
-
-        var options = {
-            enableGestures: true
-        };
+    var frameString = "",
+        handString = "",
+        fingerString = "";
+    var hand, finger;
 
       var controller = Leap.loop(options, function (frame) {
           var currentFrame = frame;
@@ -141,8 +137,15 @@ $(document).ready(function () {
                         //console.log(tdObj); // testing
                        // tdObj.style.backgroundColor = 'orange';
                         //console.log(hand.pinchStrength);
-                        if (hand.pinchStrength > .8) { 
-                          tdObj.style.backgroundColor = 'red';
+                        if (frame.valid && frame.gestures.length > 0) { 
+                            frame.gestures.forEach(function(gesture){
+                                var handIds = gesture.handIds;
+                                handIds.forEach(function(handId){
+                                    if(frame.hand(handId).type == "right" && gesture.type == "screenTap")
+                                        tdObj.style.backgroundColor = 'red';
+                                });
+                            });
+                          //tdObj.style.backgroundColor = 'red';
                         }
                       }
                       
