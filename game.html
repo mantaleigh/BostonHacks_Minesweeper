@@ -108,11 +108,16 @@
                     }
                     var selected = check_finger(finger.dipPosition);
                     if (hand.pinchStrength > 0.7) {
-                        selected.size = 60
+                        mineArray[selected.size] = 60
                         for (var f = 0; f < tenFramesBack.fingers.length; f++) {
                             if (tenFramesBack.fingers[f].type == 1) {
                                 if (tenFramesBack.fingers[f].dipPosition[2] - finger.dipPosition[2] < -50) {
-                                    selected.size = 160;
+                                    mineArray[selected].size = 160;
+                                    //Delete -- bugged
+                                    if (finger.dipPosition[2] > 150) {
+                                        mineArray[selected] = mineArray[mineArray.length - 1];
+                                        mineArray.length -= 1;
+                                    }
                                 }
                             }
                         }
@@ -130,7 +135,7 @@
         for (var i = 0; i < mineArray.length; i++) {
             if (((mineArray[i].xpos - 5) < pos[0] + 200 < (mineArray[i].xpos + 5)) && ((mineArray[i].ypos - 5) < pos[1] + 250 < (mineArray[i].ypos + 5))) {
                 console.log(mineArray[i].xpos - 5, pos[0], pos[1]);
-                return mineArray[i];
+                return i;
             }
         }
     }
