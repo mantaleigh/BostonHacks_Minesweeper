@@ -25,20 +25,16 @@ $(document).ready(function () {
             if (!board[x][y].isMine) {
                 board[x][y].isMine = true;
                 minePositions.push([x, y]);
-                if (x > c - 1) {
-                    board[x - 1][y].content++;
-                    if (y > r - 1) {
-                        board[x - 1][y - 1].content++;
-                    }
-                    if (y < 0) board[x - 1][y + 1].content++;
-                }
-                if (y < r - 1) board[x][y + 1].content++;
-                if (y > 0) board[x][y - 1].content++;
-                if (x < c - 1) {
-                    board[x + 1][y].content++;
-                    if (y < r - 1) board[x + 1][y + 1].content++;
-                    if (y > 0) board[x + 1][y - 1].content++;
-                }
+
+                if (y > 0) board[x][y-1].content++;
+                if (y < r-1) board[x][y+1].content++;
+                if (x > 0 && y > 0) board[x-1][y-1].content++;
+                if (x > 0) board[x-1][y].content++;
+                if (x > 0 && y < r-1) board[x-1][y+1].content++;
+                if (x < c-1 && y > 0) board[x+1][y-1].content++;
+                if (x < c-1) board[x+1][y].content++;
+                if (x < c-1 && y < r-1) board[x+1][y+1].content++;
+
                 minesPlaced++;
             }
         }
@@ -61,7 +57,13 @@ $(document).ready(function () {
             var row = $('<tr>');
             table.append(row);
             for (var j = 0; j < boardData[i].length; j++) {
-                var cell = $("<td>");
+                var cell;
+                if (boardData[i][j].isMine) { 
+                  cell = $("<td>X</td>");
+                } else { 
+                  cell = $("<td>" + boardData[i][j].content + "</td>")
+                }
+                //var cell = $("<td>");
                 row.append(cell);
             }
         }
