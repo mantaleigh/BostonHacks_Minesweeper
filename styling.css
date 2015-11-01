@@ -1,3 +1,13 @@
-.cell { 
-	color: orange;
+.cell {
+    color: orange;
+}
+
+.circle {
+    z-index: 10;
+    border-color: black;
+    border-radius: 5px;
+    width: 10px;
+    height: 10px;
+    position: fixed;
+    border-style: solid;
 }
