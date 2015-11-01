@@ -153,8 +153,8 @@ $(document).ready(function () {
       function check_finger(x, y) {
         // 50 is hardcoded into the css
         var cIndex = Math.floor(x/50);
-        var rIndex = Math.floor(-1*((y/50)-12.5)); // weirdly hardcoded???? idk
-        //console.log(cIndex, rIndex);
+        var rIndex = Math.floor(-1*((y/50)-12.5))+1; // weirdly hardcoded???? idk
+        console.log(cIndex, rIndex);
 
         if (rIndex < NUM_ROWS && rIndex >= 0 && cIndex < NUM_COLS && cIndex >= 0) {
           return [$('table')[0].rows[rIndex].cells[cIndex], rIndex, cIndex];
