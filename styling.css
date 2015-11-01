@@ -1,17 +1,24 @@
  /*Table and children classes */
-/*.cell { 
+.cell { 
     border: 1px solid black;
 }
 .row {
     border: 1px dashed red;
-}*/
+}
 .table {
     border: 1px solid black;
     margin: 0px auto;
+    align-content: center;
+    width: initial;
 }
 
 h1 { 
 	text-align: center;
 }
 
-/* Tile classes 
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+/* Tile classes */
